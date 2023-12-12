@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -16,7 +17,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class TaskQueue {
     private final TaskPersistenceApi taskPersistenceApi;
     private final Set<Executor> listeners = new HashSet<>();
-    Queue<Long> tasks = new ArrayBlockingQueue<>(5);
+    Queue<Long> tasks = new ArrayBlockingQueue<>(100);
 
     public TaskQueue(TaskPersistenceApi taskPersistenceApi) {
         this.taskPersistenceApi = taskPersistenceApi;
@@ -35,6 +36,11 @@ public class TaskQueue {
 
     public void addListener(Executor executor){
         listeners.add(executor);
+        executor.setListener(executor1 -> {
+            if(!this.tasks.isEmpty()){
+                executor1.execute();
+            }
+        });
     }
 
     private void notifyFirstListener(){
@@ -45,5 +51,7 @@ public class TaskQueue {
             }
         }
     }
+
+
 
 }

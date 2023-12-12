@@ -6,11 +6,16 @@ import com.example.demo.persistence.api.Task;
 import com.example.demo.shared.TaskStatus;
 import com.example.demo.task_queue.TaskQueue;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Consumer;
+
 
 public class TaskExecutor implements Executor {
     private boolean occupied = false;
     private final TaskQueue taskQueue;
     private final TaskPersistenceApi taskPersistenceApi;
+    private Consumer<Executor> listener;
 
     public TaskExecutor(TaskQueue taskQueue, TaskPersistenceApi taskPersistenceApi) {
         this.taskQueue = taskQueue;
@@ -40,6 +45,12 @@ public class TaskExecutor implements Executor {
         taskPersistenceApi.updateTaskStatus(taskId, TaskStatus.FINISHED);
         System.out.printf("%s finished\n", task.getName());
         occupied = false;
+        listener.accept(this);
+    }
+
+    @Override
+    public void setListener(Consumer<Executor> listener) {
+        this.listener = listener;
     }
 }
 
