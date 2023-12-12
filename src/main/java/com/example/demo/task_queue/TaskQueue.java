@@ -1,12 +1,13 @@
 package com.example.demo.task_queue;
 
+import com.example.demo.persistence.api.Task;
 import com.example.demo.persistence.api.TaskPersistenceApi;
 import com.example.demo.task_executor.Executor;
 import org.springframework.stereotype.Service;
 
 
 import java.util.HashSet;
-import java.util.List;
+
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -22,7 +23,7 @@ public class TaskQueue {
     }
 
     public void addTask(String name, Long durationInSeconds){
-        Long taskId = taskPersistenceApi.createTask(name, durationInSeconds);
+        Long taskId = taskPersistenceApi.createTask(new Task(name, durationInSeconds));
         tasks.add(taskId);
         System.out.printf("%s created\n", name);
         notifyFirstListener();

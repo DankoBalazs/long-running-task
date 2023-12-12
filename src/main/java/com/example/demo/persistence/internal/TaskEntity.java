@@ -1,11 +1,14 @@
 package com.example.demo.persistence.internal;
 
+import com.example.demo.persistence.api.Task;
 import com.example.demo.shared.TaskStatus;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
-public class Task {
+@Table(name = "task")
+class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -18,28 +21,22 @@ public class Task {
     private LocalDateTime started;
     private LocalDateTime finished;
 
-    public Task() {
+    public TaskEntity() {
     }
 
-    public Task(String name, Long durationInSeconds) {
-        this.name = name;
-        this.durationInSeconds = durationInSeconds;
-        this.status = TaskStatus.CREATED;
+    public TaskEntity(Task task) {
+        this.name = task.getName();
+        this.durationInSeconds = task.getDurationInSeconds();
+        this.status = task.getStatus();
     }
 
     @PreUpdate
     @PrePersist
     private void updateTimestamps(){
         switch (status){
-            case CREATED -> {
-                this.created = LocalDateTime.now();
-            }
-            case IN_PROGRESS -> {
-                this.started = LocalDateTime.now();
-            }
-            case FINISHED, FAILED -> {
-                this.finished = LocalDateTime.now();
-            }
+            case CREATED -> this.created = LocalDateTime.now();
+            case IN_PROGRESS -> this.started = LocalDateTime.now();
+            case FINISHED, FAILED -> this.finished = LocalDateTime.now();
         }
     }
 

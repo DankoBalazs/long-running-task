@@ -2,7 +2,7 @@ package com.example.demo.task_executor;
 
 
 import com.example.demo.persistence.api.TaskPersistenceApi;
-import com.example.demo.persistence.internal.Task;
+import com.example.demo.persistence.api.Task;
 import com.example.demo.shared.TaskStatus;
 import com.example.demo.task_queue.TaskQueue;
 
