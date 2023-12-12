@@ -18,9 +18,10 @@ public class Demo {
     private void start(){
         taskQueue.addListener(executorFactory.getExecutor());
         taskQueue.addListener(executorFactory.getExecutor());
-        new MyThread(taskQueue, "Task1", 5L).start();
-        new MyThread(taskQueue, "Task2", 3L).start();
-        // new MyThread(taskQueue, "Task2", 1L).start();
+        for (int i = 1; i <= 100; i++) {
+            new MyThread(taskQueue, "Task" + i, 1L).start();
+        }
+
     }
 
 
