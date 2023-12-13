@@ -1,4 +1,4 @@
-package com.example.demo.shared;
+package com.example.demo.persistence.api;
 
 public enum TaskStatus {
     CREATED,

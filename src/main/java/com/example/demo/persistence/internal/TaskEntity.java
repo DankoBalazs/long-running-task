@@ -1,7 +1,7 @@
 package com.example.demo.persistence.internal;
 
 import com.example.demo.persistence.api.Task;
-import com.example.demo.shared.TaskStatus;
+import com.example.demo.persistence.api.TaskStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

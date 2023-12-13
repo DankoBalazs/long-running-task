@@ -1,7 +1,5 @@
 package com.example.demo.persistence.api;
 
-import com.example.demo.shared.TaskStatus;
-
 public class Task {
 
     private final String name;

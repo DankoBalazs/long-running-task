@@ -2,7 +2,7 @@ package com.example.demo.persistence.internal;
 
 import com.example.demo.persistence.api.Task;
 import com.example.demo.persistence.api.TaskPersistenceApi;
-import com.example.demo.shared.TaskStatus;
+import com.example.demo.persistence.api.TaskStatus;
 import org.springframework.stereotype.Service;
 
 @Service

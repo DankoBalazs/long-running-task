@@ -3,21 +3,23 @@ package com.example.demo.task_queue;
 import com.example.demo.persistence.api.Task;
 import com.example.demo.persistence.api.TaskPersistenceApi;
 import com.example.demo.task_executor.Executor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 
 import java.util.HashSet;
-
-import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 
 @Service
 public class TaskQueue {
+    private static Logger logger = LoggerFactory.getLogger(TaskQueue.class);
     private final TaskPersistenceApi taskPersistenceApi;
     private final Set<Executor> listeners = new HashSet<>();
-    Queue<Long> tasks = new ArrayBlockingQueue<>(100);
+    private final Queue<Long> tasks = new ArrayBlockingQueue<>(100);
+
 
     public TaskQueue(TaskPersistenceApi taskPersistenceApi) {
         this.taskPersistenceApi = taskPersistenceApi;
@@ -26,7 +28,7 @@ public class TaskQueue {
     public void addTask(String name, Long durationInSeconds){
         Long taskId = taskPersistenceApi.createTask(new Task(name, durationInSeconds));
         tasks.add(taskId);
-        System.out.printf("%s created\n", name);
+        logger.info("%s created".formatted(name));
         notifyFirstListener();
     }
 
