@@ -6,6 +6,7 @@ create table task(
     created TIMESTAMP,
     started TIMESTAMP,
     finished TIMESTAMP,
+    thread_name TEXT,
 
     primary key (id)
 )

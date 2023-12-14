@@ -18,13 +18,10 @@ public class Demo {
     private void start(){
         taskQueue.addListener(executorFactory.getExecutor());
         taskQueue.addListener(executorFactory.getExecutor());
-        for (int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 60; i++) {
             new MyThread(taskQueue, "Task" + i, 1L).start();
         }
-
     }
-
-
 }
 
 class MyThread extends Thread{

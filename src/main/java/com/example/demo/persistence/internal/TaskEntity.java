@@ -20,6 +20,7 @@ class TaskEntity {
     private LocalDateTime created;
     private LocalDateTime started;
     private LocalDateTime finished;
+    private String threadName;
 
     public TaskEntity() {
     }
@@ -38,6 +39,7 @@ class TaskEntity {
             case IN_PROGRESS -> this.started = LocalDateTime.now();
             case FINISHED, FAILED -> this.finished = LocalDateTime.now();
         }
+        threadName = Thread.currentThread().getName();
     }
 
     public Long getId() {
@@ -62,6 +64,10 @@ class TaskEntity {
 
     public LocalDateTime getFinished() {
         return finished;
+    }
+
+    public String getThreadName() {
+        return threadName;
     }
 
     public void setId(Long id) {
